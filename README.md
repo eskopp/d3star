@@ -1,25 +1,25 @@
 # d3star
 
-Statische Web-Seite: Ort und Datum eingeben, den Sternenhimmel von dort sehen
-und mit Maus/Touch schwenken und zoomen.
+Static web page: enter a place and a date, see the night sky from there and
+pan and zoom it with mouse or touch.
 
-## Aufbau
+## Layout
 
-| Datei | Zweck |
-|-------|-------|
-| `index.html` | Seitengerüst und Eingabefelder |
-| `app.js` | Geocoding (Nominatim) + Ansteuerung der Karte |
+| File | Purpose |
+|------|---------|
+| `index.html` | Page skeleton and input fields |
+| `app.js` | Geocoding (Nominatim) + driving the map |
 | `style.css` | Layout |
 | `vendor/` | [d3-celestial](https://github.com/ofrohn/d3-celestial) 0.7.x + D3 (BSD) |
-| `data/` | Stern-, DSO- und Sternbildkataloge (mitgeliefert, kein API-Call) |
+| `data/` | Star, DSO and constellation catalogs (bundled, no API call) |
 
-Die Karte läuft komplett im Browser. Der einzige Netzaufruf ist die
-Ortssuche über die [Nominatim](https://nominatim.org/)-API von OpenStreetMap.
+The map runs entirely in the browser. The only network request is the place
+lookup via OpenStreetMap's [Nominatim](https://nominatim.org/) API.
 
-## Lokal starten
+## Running locally
 
-Wegen `fetch` auf die JSON-Kataloge braucht es einen HTTP-Server, `file://`
-reicht nicht:
+Because the JSON catalogs are loaded with `fetch`, an HTTP server is needed;
+`file://` does not work:
 
 ```sh
 python -m http.server 8000
@@ -28,17 +28,17 @@ python -m http.server 8000
 
 ## Deployment
 
-Push auf `main` -> GitHub Actions (`deploy-pages.yml`) veröffentlicht das
-Repo-Wurzelverzeichnis auf GitHub Pages.
+A push to `main` -> GitHub Actions (`deploy-pages.yml`) publishes the repo
+root directory to GitHub Pages.
 
-## Bekannte Grenze
+## Known limitation
 
-`datetime-local` liefert keine Zeitzone. Die Eingabe wird als Ortszeit des
-Browsers interpretiert. Für einen Ort in einer anderen Zeitzone ist das
-Sternfeld um den Zonenversatz verschoben. Für exakte Zeiten die Uhrzeit in
-UTC bzw. mit passendem Offset eingeben.
+`datetime-local` carries no time zone. The input is read as the browser's
+local time. For a place in a different time zone the star field is off by the
+zone offset. For exact times, enter the time in UTC or with the matching
+offset.
 
-## Lizenz
+## License
 
-Eigener Code unter MIT (`LICENSE`). d3-celestial und D3 unter BSD-3-Clause
+Own code under MIT (`LICENSE`). d3-celestial and D3 under BSD-3-Clause
 (`vendor/LICENSE-d3-celestial`).

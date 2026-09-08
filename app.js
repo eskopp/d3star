@@ -56,13 +56,13 @@ function parseInput(value) {
 function geocode(query) {
   var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=" +
             encodeURIComponent(query);
-  return fetch(url, { headers: { "Accept-Language": "de" } })
+  return fetch(url, { headers: { "Accept-Language": "en" } })
     .then(function (r) {
-      if (!r.ok) throw new Error("Geocoding fehlgeschlagen (" + r.status + ")");
+      if (!r.ok) throw new Error("Geocoding failed (" + r.status + ")");
       return r.json();
     })
     .then(function (list) {
-      if (!list.length) throw new Error("Ort nicht gefunden: " + query);
+      if (!list.length) throw new Error("Place not found: " + query);
       return {
         lat: parseFloat(list[0].lat),
         lon: parseFloat(list[0].lon),
@@ -78,7 +78,7 @@ function render(lat, lon, date) {
 }
 
 function apply(query, date) {
-  setStatus("Suche Ort …");
+  setStatus("Looking up place …");
   return geocode(query).then(function (loc) {
     setStatus(loc.label);
     placeEl.value = query;
@@ -109,7 +109,7 @@ function readUrl() {
 formEl.addEventListener("submit", function (e) {
   e.preventDefault();
   var query = placeEl.value.trim();
-  if (!query) { setStatus("Bitte einen Ort eingeben.", true); return; }
+  if (!query) { setStatus("Please enter a place.", true); return; }
   apply(query, parseInput(dateEl.value));
 });
 
