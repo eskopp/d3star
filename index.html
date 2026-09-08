@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>d3star — the night sky for a place and date</title>
   <link rel="stylesheet" href="vendor/celestial.css">
   <link rel="stylesheet" href="style.css">
@@ -25,7 +25,11 @@
   </header>
 
   <div id="celestial-map"></div>
-  <div id="celestial-form"></div>
+
+  <details id="settings">
+    <summary>Display settings</summary>
+    <div id="celestial-form"></div>
+  </details>
 
   <footer>
     Map: <a href="https://github.com/ofrohn/d3-celestial">d3-celestial</a> (BSD).

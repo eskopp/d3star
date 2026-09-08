@@ -113,9 +113,17 @@ formEl.addEventListener("submit", function (e) {
   apply(query, parseInput(dateEl.value));
 });
 
-window.addEventListener("resize", function () {
-  Celestial.resize({ width: mapEl.clientWidth });
-});
+var resizeQueued = false;
+function onResize() {
+  if (resizeQueued) return;
+  resizeQueued = true;
+  requestAnimationFrame(function () {
+    resizeQueued = false;
+    Celestial.resize({ width: mapEl.clientWidth });
+  });
+}
+window.addEventListener("resize", onResize);
+window.addEventListener("orientationchange", onResize);
 
 var initial = readUrl();
 dateEl.value = initial.date || toInputValue(new Date());

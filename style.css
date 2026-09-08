@@ -2,11 +2,16 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  overscroll-behavior: none;          /* no pull-to-refresh fighting the map */
+}
+
 body {
   margin: 0;
   background: #05070d;
   color: #dfe6f2;
   font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
 }
 
 header {
@@ -20,10 +25,12 @@ h1 {
   letter-spacing: 0.5px;
 }
 
+/* --- controls ---------------------------------------------------------- */
+
 #controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px 12px;
   align-items: flex-end;
 }
 
@@ -31,6 +38,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex: 1 1 200px;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -38,43 +46,100 @@ h1 {
 }
 
 #controls input {
+  width: 100%;
+  min-width: 0;
   background: #0d1322;
   border: 1px solid #26324a;
   border-radius: 6px;
   color: #dfe6f2;
-  padding: 7px 9px;
-  font-size: 14px;
-  min-width: 220px;
+  padding: 9px 10px;
+  font-size: 16px;               /* >=16px stops iOS zoom-on-focus */
 }
 
 #controls button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 8px 20px;
   background: #2d5bd7;
   border: 0;
   border-radius: 6px;
   color: #fff;
-  padding: 8px 16px;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 
 #controls button:hover { background: #3d6bea; }
 
 #status {
+  flex-basis: 100%;
   font-size: 13px;
   color: #8b97ad;
-  align-self: center;
 }
 
 #status.error { color: #ff8f8f; }
 
+/* --- map -------------------------------------------------------------- */
+
 #celestial-map {
+  display: block;
   width: 100%;
+  max-width: 960px;
+  min-width: 0 !important;         /* override vendor min-width: 720px */
+  margin: 0 auto;
+  overflow: hidden;
+  touch-action: none;             /* let d3 own drag/pinch on the canvas */
 }
 
 #celestial-map canvas {
   display: block;
+  max-width: 100%;
   margin: 0 auto;
+  touch-action: none;
 }
+
+/* bigger, theme-matched zoom buttons for touch */
+#celestial-zoomin,
+#celestial-zoomout {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 26px !important;
+  line-height: 38px !important;
+  color: #e7ecf6 !important;
+  background: rgba(10, 15, 28, 0.6) !important;
+  border: 1px solid #3a4a6a !important;
+}
+#celestial-zoomin  { top: 12px !important; }
+#celestial-zoomout { top: 58px !important; }
+
+/* --- display settings (collapsible) --------------------------------- */
+
+#settings {
+  margin: 8px 16px;
+  border: 1px solid #1b2438;
+  border-radius: 6px;
+}
+
+#settings summary {
+  padding: 9px 12px;
+  cursor: pointer;
+  color: #8fa8e0;
+  font-size: 14px;
+  list-style: none;
+}
+
+#settings summary::-webkit-details-marker { display: none; }
+#settings summary::before { content: "\25B8  "; }
+#settings[open] summary::before { content: "\25BE  "; }
+#settings[open] summary { border-bottom: 1px solid #1b2438; }
+
+#celestial-form {
+  padding: 10px;
+  max-width: 100%;
+  overflow-x: auto;               /* vendor form has fixed-width rows */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- footer -------------------------------------------------------- */
 
 footer {
   padding: 10px 16px;
@@ -84,3 +149,12 @@ footer {
 }
 
 footer a { color: #8fa8e0; }
+
+/* --- narrow screens ---------------------------------------------------- */
+
+@media (max-width: 600px) {
+  header { padding: 10px 12px; }
+  #settings { margin: 8px 12px; }
+  footer { padding: 10px 12px; }
+  #controls button { flex: 1 1 100%; }
+}
