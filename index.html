@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>d3star — Sternenhimmel an Ort und Datum</title>
+  <link rel="stylesheet" href="vendor/celestial.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>d3star</h1>
+    <form id="controls">
+      <label>
+        Ort
+        <input type="text" id="place" placeholder="z. B. Ilmenau" autocomplete="off">
+      </label>
+      <label>
+        Datum &amp; Uhrzeit
+        <input type="datetime-local" id="datetime">
+      </label>
+      <button type="submit" id="show">Anzeigen</button>
+      <span id="status" role="status"></span>
+    </form>
+  </header>
+
+  <div id="celestial-map"></div>
+  <div id="celestial-form"></div>
+
+  <footer>
+    Karte: <a href="https://github.com/ofrohn/d3-celestial">d3-celestial</a> (BSD).
+    Geocoding: <a href="https://nominatim.org/">Nominatim / OpenStreetMap</a>.
+  </footer>
+
+  <script src="vendor/d3.min.js"></script>
+  <script src="vendor/d3.geo.projection.min.js"></script>
+  <script src="vendor/celestial.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
